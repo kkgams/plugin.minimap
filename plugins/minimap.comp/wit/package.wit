@@ -1,0 +1,31 @@
+package gams:minimap@1.0.0;
+
+interface minimap {
+    type data-entry = tuple<string, string>;
+
+    record node {
+        data: list<data-entry>,
+        parent-id: s32,
+    }
+
+    type tree = list<node>;
+
+    record tile-layer {
+        width: u32,
+        data: list<u32>,
+        props: list<data-entry>,
+    }
+
+    record tile-map {
+        layers: list<tile-layer>,
+        props: list<data-entry>,
+    }
+
+    gen: func(tree: tree) -> result<tile-map, string>;
+}
+
+world generator {
+    include wasi:cli/imports@0.2.0;
+
+    export minimap;
+}

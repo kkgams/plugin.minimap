@@ -1,0 +1,14 @@
+{
+  "legal": {
+    "evidence_sha256": "a4d92490a3275079dbeff98217e13cd6455f251e19f9a46d7bc8beaa1f64b3c5",
+    "license_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "notice_sha256": "6584268c5749e27a569f1016a246c966d51ab41314eb1d1ad33cbffb56579b3a",
+    "permission_blockers": [],
+    "status": "bounded source review; owner digest/artifact approval pending"
+  },
+  "monorepo_revision": "a2f939f22b8814950ff066abf245ab5d9da40e42",
+  "preparation": "Source prepared and reviewed; no hosted Linux or graphical validation claimed.",
+  "repository": "plugin.minimap",
+  "schema": 1,
+  "source_snapshot": "Working-tree byte snapshot; exact source origins/adaptations in NOTICE-EVIDENCE.json."
+}

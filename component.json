@@ -1,0 +1,13 @@
+{
+  "name": "plugin.minimap",
+  "slug": "minimap",
+  "source": "minimap",
+  "world": "generator",
+  "binding": null,
+  "members": [
+    "minimap"
+  ],
+  "artifacts": [
+    "plugin.minimap.wasm"
+  ]
+}
