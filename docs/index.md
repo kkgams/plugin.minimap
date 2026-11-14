@@ -1,44 +1,35 @@
 ---
-title: Development
+title: plugin.minimap
+description: Generate tile maps from trees.
 status: reference
 ---
 
-# plugin.minimap development
+# plugin.minimap
 
-Build and verify the component with its pinned toolchain:
+A [GAMS](https://github.com/kkgams/gams) WASM plugin for generating tile maps from trees.
 
-```sh
-nix develop --command make build
-nix develop --command make test
-```
+| Unit | Source / artifact | Original work |
+| --- | --- | --- |
+| Tree-to-tilemap generator | `plugins/minimap.comp/main.go` / `plugin.minimap.wasm` | GAMS |
 
-## Local Project and documentation
+## API
 
-```sh
-nix develop --command make open  # build, then open this repository's gams.json
-make serve-docs                 # http://localhost:8080; DOCS_PORT overrides
-make validate-docs
-make docs                       # portable site under build/site/
-```
+`plugins/minimap.comp/wit/package.wit` defines `gams:minimap/minimap@1.0.0`: `gen(tree)` returning a tile map or error. Nodes carry string-pair properties and parent IDs; maps contain layers with widths, flat tile arrays and properties. The `generator` world uses Host-provided WASI imports.
 
-`make open` builds `dist/plugin.minimap.wasm` and explicitly sets `GAMS_APP_CWD`
-to this repository. The local Project loads that component and the pinned
-released Files View to inspect Project files; it is not an API demo.
-The shell uses the released layout provider.
-No sibling source checkout is required.
+## Development
 
-`make tools/gams.app` downloads the released macOS Apple Silicon Host only
-when absent and retains its notices under `tools/gams-release-notices/`.
-Existing downloads are not updated implicitly; macOS security checks remain
-intact. The first download and Project launch require network access.
-Pinned dependencies are declared in `gams.json`; Host caches live in ignored
-`gams_modules/`. Native GUI behavior requires separate verification.
+Use `nix develop` (or direnv) for pinned Go 1.25, TinyGo, wasm-tools and documentation tools. No sibling checkout is required.
 
-Documentation uses pinned justgook/wiki v1.4.0, with ignored engine/output
-under `build/`. `build-docs` remains a build alias. GitHub Pages runs `make docs`
-on every push to `release`, independently of component release tags.
-Enable **Settings → Pages → Source → GitHub Actions**. Existing component
-build, runtime tests, candidate checks and matching-tag release rules are unchanged.
+| Command | Purpose |
+| --- | --- |
+| `make build` | Compile and validate the component with embedded notices. |
+| `make package` | Prepare `build.nosync/plugin.minimap.wasm`, `LICENSES.zip` and `SHA256SUMS` incrementally. |
+| `make test` | Run the native Go package checks and existing SDK tilemap tests. |
+| `make check` | Check Python tooling syntax; native tests are separate from WASM runtime coverage. |
+| `make open` | Build and open this local Project in the released macOS Apple Silicon Host. |
+| `make docs` | Build the wiki to `build.nosync/site`. |
+| `make serve-docs` | Preview the wiki; `DOCS_PORT` defaults to 8080. |
+| `make validate-docs` | Validate wiki content. |
+| `make clean` | Remove `build.nosync` and identified Host/Unit downloads; refuse tracked files, symlinks and unidentified supplied tools/caches. |
 
-See the repository README and licensing/publication documents for API details,
-coverage limits and existing release gates.
+The local Project browses files with pinned published Units; it is not a tilemap editor or runtime test. Downloads preserve accompanying notices and existing Host tools. Packaging does not verify native Host/API behavior.
