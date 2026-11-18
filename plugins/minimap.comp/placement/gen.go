@@ -107,11 +107,9 @@ func (g *Generator) generateWithRetry(attempt int) (*Placement, error) {
 		// This gives larger subtrees more space to expand
 		children := g.getChildrenSortedBySubtreeSize(parentIdx)
 
-		for i, childIdx := range children {
-			isLastChild := i == len(children)-1
-
+		for _, childIdx := range children {
 			// Place this child
-			err := g.placeChildSafe(parentIdx, childIdx, isLastChild)
+			err := g.placeChildSafe(parentIdx, childIdx)
 			if err != nil {
 				// Placement failed - retry if we haven't exceeded max attempts
 				// Scale max attempts quadratically with tree size (conflicts compound)
@@ -167,7 +165,7 @@ func (g *Generator) generateWithRetry(attempt int) (*Placement, error) {
 }
 
 // placeChildSafe is like placeChild but returns error instead of panicking
-func (g *Generator) placeChildSafe(parentIdx, childIdx int, isLastChild bool) error {
+func (g *Generator) placeChildSafe(parentIdx, childIdx int) error {
 	parent := g.Placement.Rooms[RoomID(parentIdx+1)]
 	childShape, err := g.GetRoomShape((*g.Tree)[childIdx])
 	if err != nil {

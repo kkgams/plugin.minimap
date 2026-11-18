@@ -5,8 +5,8 @@ package main
 import (
 	"sort"
 
-	"github.com/kkgams/minimap/placement"
 	minimapwit "github.com/kkgams/minimap/internal/gams/minimap/minimap"
+	"github.com/kkgams/minimap/placement"
 	"github.com/kkgams/sdk/go/tilemap"
 	"github.com/kkgams/sdk/go/tree"
 	"go.bytecodealliance.org/cm"
